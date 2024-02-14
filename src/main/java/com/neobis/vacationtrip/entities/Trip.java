@@ -1,4 +1,4 @@
-package com.neobis.vactiontrip.entities;
+package com.neobis.vacationtrip.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,6 +21,7 @@ public class Trip {
 
     private String destination;
 
+    @Column(length = 1000)
     private String description;
 
     private String location;
@@ -29,10 +30,10 @@ public class Trip {
 
     private String season;
 
-   @OneToMany(mappedBy = "trips")
+   @OneToMany(mappedBy = "trip")
     private List<Image> imagesList;
 
-    @OneToMany(mappedBy = "trips")
+    @OneToMany(mappedBy = "trip")
     private List<Review> reviews;
 
     private Integer numberOfViews;

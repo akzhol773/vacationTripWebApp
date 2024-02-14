@@ -1,4 +1,4 @@
-package com.neobis.vactiontrip.entities;
+package com.neobis.vacationtrip.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

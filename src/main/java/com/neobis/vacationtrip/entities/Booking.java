@@ -1,4 +1,4 @@
-package com.neobis.vactiontrip.entities;
+package com.neobis.vacationtrip.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "reviews")
+@Table(name = "bookings")
 @Entity
-public class Review {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
@@ -22,12 +22,16 @@ public class Review {
     @JoinColumn(name = "trip_id")
     private Trip trip;
 
-    private String username;
+    @CreationTimestamp
+    private LocalDateTime bookingDate;
+
+    private String phoneNumber;
+
+
+    private int numberOfPeople;
+
 
     private String comment;
-
-    @CreationTimestamp
-    private LocalDateTime createdDate;
 
 
 }

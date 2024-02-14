@@ -1,4 +1,4 @@
-package com.neobis.vactiontrip.entities;
+package com.neobis.vacationtrip.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;

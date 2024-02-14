@@ -1,9 +1,6 @@
 package com.neobis.vactiontrip.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -11,13 +8,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "images")
 @Entity
-public class Images {
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
     private String imageUrl;
 
-    private Destinations destination;
+    @ManyToOne
+    @JoinColumn(name = "trip_id")
+    private Trip trip;
 }

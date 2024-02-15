@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,10 +31,10 @@ public class Trip {
 
     private String season;
 
-   @OneToMany(mappedBy = "trip")
+   @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Image> imagesList;
 
-    @OneToMany(mappedBy = "trip")
+    @OneToMany(mappedBy = "trip",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     private Integer numberOfViews;
@@ -42,6 +43,11 @@ public class Trip {
 
     @CreationTimestamp
     private LocalDateTime createdDate;
+
+    public Trip(){
+        this.imagesList = new ArrayList<>();
+        this.reviews = new ArrayList<>();
+    }
 
 
 }

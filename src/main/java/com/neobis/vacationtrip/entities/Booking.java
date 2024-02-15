@@ -18,7 +18,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "trip_id")
     private Trip trip;
 

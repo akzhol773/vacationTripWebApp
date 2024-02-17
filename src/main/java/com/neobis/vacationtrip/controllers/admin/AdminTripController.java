@@ -27,8 +27,7 @@ public class AdminTripController {
 //
 //
 //
-//
-//    @DeleteMapping("/delete")
+
 
 
 }

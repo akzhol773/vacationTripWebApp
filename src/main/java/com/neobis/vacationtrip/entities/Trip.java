@@ -5,13 +5,13 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Table(name = "trips")
 @Entity
@@ -49,6 +49,9 @@ public class Trip {
         this.imagesList = new ArrayList<>();
         this.reviews = new ArrayList<>();
     }
+
+
+
 
 
 }

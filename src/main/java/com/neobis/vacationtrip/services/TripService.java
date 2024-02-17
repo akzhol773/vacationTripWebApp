@@ -7,12 +7,12 @@ import com.neobis.vacationtrip.exceptions.TripNotExistException;
 import com.neobis.vacationtrip.mapper.TripMapper;
 import com.neobis.vacationtrip.repositories.TripRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @RequiredArgsConstructor
@@ -20,11 +20,11 @@ import java.util.List;
 public class TripService {
     private final TripRepository tripRepository;
     private final TripMapper tripMapper;
-    Pageable pageable = PageRequest.of(0, 9);
+    Pageable pageable = PageRequest.of(3, 12);
 
 
     public List<TripResponseDto> findPopularTrips() {
-        List<Trip>  popularTrips = tripRepository.findPopularTrips(pageable);
+        List<Trip>  popularTrips = tripRepository.findPopularTrips(Limit.of(9));
         if (popularTrips == null || popularTrips.isEmpty()){
             throw new EmptyListException("There aren't any popular trips available.");
         }
@@ -33,11 +33,12 @@ public class TripService {
 
     public TripResponseDto findTripsById(Long id) {
         Trip trip = tripRepository.findById(id).orElseThrow(()-> new TripNotExistException("Trip with id: " + id + " not found."));
+        incrementTripViews(id);
         return tripMapper.convertToDto(trip);
     }
 
     public List<TripResponseDto> findNewTrips() {
-        List<Trip>  newTrips = tripRepository.findNewTrips(pageable);
+        List<Trip>  newTrips = tripRepository.findNewTrips(Limit.of(9));
         if (newTrips == null || newTrips.isEmpty()){
             throw new EmptyListException("There aren't any new trips available.");
         }
@@ -45,7 +46,7 @@ public class TripService {
     }
 
     public List<TripResponseDto> findMostVisitedTrips() {
-        List<Trip>  mostVisitedTrips = tripRepository.findMostVisitedTrips(pageable);
+        List<Trip>  mostVisitedTrips = tripRepository.findMostVisitedTrips(Limit.of(9));
         if (mostVisitedTrips == null || mostVisitedTrips.isEmpty()){
             throw new EmptyListException("There aren't any most visited trips available.");
         }
@@ -69,13 +70,46 @@ public class TripService {
     }
 
     public List<TripResponseDto> findRecommendedTrips() {
-        List<Trip>  popularTrips = tripRepository.findPopularTrips(pageable2);
-        if (popularTrips == null || popularTrips.isEmpty()){
-            throw new EmptyListException("There aren't any popular trips available.");
+
+        List<Trip> allTrips = tripRepository.findAll();
+
+        List<Trip> popularTrips = filterPopularTrips(allTrips);
+
+        if (popularTrips.isEmpty()) {
+            throw new EmptyListException("There aren't any recommended trips available.");
         }
         return tripMapper.convertToDtoList(popularTrips);
+    }
 
+    private List<Trip> filterPopularTrips(List<Trip> allTrips) {
+
+        List<Trip>  mostVisitedTrips = tripRepository.findMostVisitedTrips(Limit.of(50));
+
+        List<Trip>  popularTrips = tripRepository.findPopularTrips(Limit.of(50));
+
+        Set<Trip> recommendedTrips = new HashSet<>();
+        recommendedTrips.addAll(mostVisitedTrips);
+        recommendedTrips.addAll(popularTrips);
+
+        if (recommendedTrips == null || recommendedTrips.isEmpty()){
+            throw new EmptyListException("There aren't any recommended trips available.");
+        }
+        return new ArrayList<>(recommendedTrips);
 
     }
+    public void incrementTripViews(Long tripId) {
+        Trip trip = tripRepository.findById(tripId).orElseThrow(() -> new TripNotExistException("Trip not found with id: " + tripId));
+        trip.setNumberOfViews(trip.getNumberOfViews() + 1);
+        tripRepository.save(trip);
+    }
+
+
+
+
+
+
+
+
+
 
 }

@@ -17,7 +17,4 @@ public class Image {
 
     private String imageUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "trip_id")
-    private Trip trip;
 }

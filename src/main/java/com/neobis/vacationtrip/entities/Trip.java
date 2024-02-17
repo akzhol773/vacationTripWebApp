@@ -32,8 +32,13 @@ public class Trip {
     private String continent;
 
 
-   @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Image> imagesList;
+   @OneToMany
+   @JoinTable(
+           name = "trips' images",
+           joinColumns = @JoinColumn(name = "trip_id"),
+           inverseJoinColumns = @JoinColumn(name = "image_id")
+   )
+    private List<Image> images;
 
     @OneToMany(mappedBy = "trip",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Review> reviews;
@@ -46,8 +51,14 @@ public class Trip {
     private LocalDateTime createdDate;
 
     public Trip(){
-        this.imagesList = new ArrayList<>();
+        this.images = new ArrayList<>();
         this.reviews = new ArrayList<>();
+    }
+    public void addImage(Image image) {
+        if (images == null) {
+            images = new ArrayList<>();
+        }
+        images.add(image);
     }
 
 

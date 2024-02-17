@@ -1,17 +1,22 @@
 package com.neobis.vacationtrip.services;
 
+import com.neobis.vacationtrip.dtos.TripRequestDto;
 import com.neobis.vacationtrip.dtos.TripResponseDto;
+import com.neobis.vacationtrip.entities.Image;
 import com.neobis.vacationtrip.entities.Trip;
 import com.neobis.vacationtrip.exceptions.EmptyListException;
 import com.neobis.vacationtrip.exceptions.TripNotExistException;
 import com.neobis.vacationtrip.mapper.TripMapper;
 import com.neobis.vacationtrip.repositories.TripRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -20,6 +25,7 @@ import java.util.*;
 public class TripService {
     private final TripRepository tripRepository;
     private final TripMapper tripMapper;
+    private final ImageService imageService;
     Pageable pageable = PageRequest.of(3, 12);
 
 
@@ -104,12 +110,25 @@ public class TripService {
     }
 
 
+    public void createTrip(TripRequestDto requestDto,List<MultipartFile> images)  {
+
+        Trip trip = new Trip();
+        trip.setDestination(requestDto.destination());
+        trip.setDescription(requestDto.description());
+        trip.setLocation(requestDto.location());
+        trip.setCountry(requestDto.country());
+        trip.setContinent(requestDto.continent());
 
 
+        for (MultipartFile image : images) {
+            try {
+                trip.addImage(imageService.saveImage(image));
+            }catch (IOException e){
+                throw new RuntimeException();
+            }
+        }
 
-
-
-
-
+        tripRepository.save(trip);
+    }
 
 }

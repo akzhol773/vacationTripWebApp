@@ -1,7 +1,7 @@
 package com.neobis.vacationtrip.dtos;
 
 import com.neobis.vacationtrip.entities.Image;
-import lombok.Value;
+import com.neobis.vacationtrip.entities.Review;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,6 +9,6 @@ import java.util.List;
 /**
  * DTO for {@link com.neobis.vacationtrip.entities.Trip}
  */
-@Value
-public record TripResponseDto(String destination, List<Image> imagesList) implements Serializable {
+public record TripResponseDto(String destination, String description, String location, String country,
+                              List<Image> imagesList, List<Review> reviews) implements Serializable {
 }

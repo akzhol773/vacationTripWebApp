@@ -29,7 +29,8 @@ public class Trip {
 
     private String country;
 
-    private String season;
+    private String continent;
+
 
    @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Image> imagesList;

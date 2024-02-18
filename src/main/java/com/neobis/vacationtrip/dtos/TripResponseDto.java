@@ -2,13 +2,23 @@ package com.neobis.vacationtrip.dtos;
 
 import com.neobis.vacationtrip.entities.Image;
 import com.neobis.vacationtrip.entities.Review;
+import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * DTO for {@link com.neobis.vacationtrip.entities.Trip}
- */
-public record TripResponseDto(String destination, String description, String location, String country,
-                              List<Image> imagesList, List<Review> reviews) implements Serializable {
+
+@Data
+public class TripResponseDto {
+   private String destination;
+   private String description;
+   private String location;
+   private String country;
+    private Integer numberOfViews;
+    private Integer numberOfBookings;
+
+    private List<Image> imagesList = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
+
 }

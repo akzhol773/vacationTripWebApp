@@ -54,13 +54,6 @@ public class Trip {
         this.images = new ArrayList<>();
         this.reviews = new ArrayList<>();
     }
-    public void addImage(Image image) {
-        if (images == null) {
-            images = new ArrayList<>();
-        }
-        images.add(image);
-    }
-
 
 
 

@@ -16,17 +16,22 @@ import java.time.LocalDateTime;
 public class BookingService {
     private final TripRepository tripRepository;
     private final BookingRepository bookingRepository;
+
     public void bookTrip(BookingRequestDto bookingRequest) {
+
         Trip trip = tripRepository.findById(bookingRequest.trip().getId())
                 .orElseThrow(() -> new TripNotExistException("Trip not found with ID: " + bookingRequest.trip().getId()));
 
-    Booking booking = Booking.builder()
-            .trip(trip)
-            .phoneNumber(bookingRequest.phoneNumber())
-            .numberOfPeople(bookingRequest.numberOfPeople())
-            .comment(bookingRequest.comment())
-            .bookingDate(LocalDateTime.now())
-            .build();
+        validateBookingRequest(bookingRequest);
+
+
+        Booking booking = Booking.builder()
+                .trip(trip)
+                .phoneNumber(bookingRequest.phoneNumber())
+                .numberOfPeople(bookingRequest.numberOfPeople())
+                .comment(bookingRequest.comment())
+                .bookingDate(LocalDateTime.now())
+                .build();
 
         bookingRepository.save(booking);
         incrementTripVisits(trip.getId());
@@ -40,6 +45,11 @@ public class BookingService {
         tripRepository.save(trip);
     }
 
+    private void validateBookingRequest(BookingRequestDto bookingRequest) {
+        if (bookingRequest.numberOfPeople() <= 0 || bookingRequest.phoneNumber() == null) {
+            throw new IllegalArgumentException("Invalid booking request: phoneNumber and numberOfPeople must be provided.");
+        }
 
 
+    }
 }

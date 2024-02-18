@@ -1,27 +1,50 @@
 package com.neobis.vacationtrip.services;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
-import com.neobis.vacationtrip.entities.Image;
+
+import com.neobis.vacationtrip.dtos.ImageRequestDto;
+
 import com.neobis.vacationtrip.repositories.ImageRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+
+
+import java.util.Map;
+
 
 @Service
 @RequiredArgsConstructor
 public class ImageService {
+
     private final ImageRepository imageRepository;
-    private final Cloudinary cloudinary;
-
-    public Image saveImage(MultipartFile image) throws IOException {
-        String imageUrl = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap()).get("url").toString();
-        Image imageToBeSaved = new Image();
-        imageToBeSaved.setImageUrl(imageUrl);
-        return imageRepository.save(imageToBeSaved);
-    }
+    private final CloudinaryService cloudinaryService;
 
 
+//    public ResponseEntity<Map> uploadImage(ImageRequestDto imageModel) {
+//        try {
+//            if (imageModel.getName().isEmpty()) {
+//                return ResponseEntity.badRequest().build();
+//            }
+//            if (imageModel.getFile().isEmpty()) {
+//                return ResponseEntity.badRequest().build();
+//            }
+//            Image image = new Image();
+//            image.setName(imageModel.getName());
+//            image.setUrl(cloudinaryService.uploadFile(imageModel.getFile(), "folder_1"));
+//            if (image.getUrl() == null) {
+//                return ResponseEntity.badRequest().build();
+//            }
+//            imageRepository.save(image);
+//            return ResponseEntity.ok().body(Map.of("url", image.getUrl()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//
+//
+//    }
 }
+
+
+

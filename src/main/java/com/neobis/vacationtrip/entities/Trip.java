@@ -40,7 +40,12 @@ public class Trip {
    )
     private List<Image> images;
 
-    @OneToMany(mappedBy = "trip",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinTable(
+            name = "trips_reviews",
+            joinColumns = @JoinColumn(name = "trip_id"),
+            inverseJoinColumns = @JoinColumn(name = "review_id")
+    )
     private List<Review> reviews;
 
     private Integer numberOfViews;
@@ -49,6 +54,7 @@ public class Trip {
 
     @CreationTimestamp
     private LocalDateTime createdDate;
+
 
     public Trip(){
         this.images = new ArrayList<>();

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenUtils {
 
-    private static final String SECRET_KEY = "e04d9c90ace498640b31921843520cc68cffff8ea65aa0975a56cd13d23b0ba7";
+    private static final String SECRET_KEY = System.getenv("SECRET_KEY");
 
 
     public String generateToken(UserDetails userDetails) {

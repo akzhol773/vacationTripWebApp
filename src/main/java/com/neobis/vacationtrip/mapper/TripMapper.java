@@ -18,6 +18,9 @@ public class TripMapper {
     public TripResponseDto convertToDto(Trip trip) {
         return modelMapper.map(trip, TripResponseDto.class);
     }
+    public Trip convertToEntity(TripResponseDto tripResponseDto) {
+        return modelMapper.map(tripResponseDto, Trip.class);
+    }
     public List<TripResponseDto> convertToDtoList(List<Trip> books) {
         return books.stream()
                 .map(this::convertToDto)

@@ -1,6 +1,5 @@
 package com.neobis.vacationtrip.services;
 
-import com.neobis.vacationtrip.dtos.ImageRequestDto;
 import com.neobis.vacationtrip.dtos.TripRequestDto;
 import com.neobis.vacationtrip.dtos.TripResponseDto;
 
@@ -9,7 +8,6 @@ import com.neobis.vacationtrip.entities.Trip;
 import com.neobis.vacationtrip.exceptions.EmptyListException;
 import com.neobis.vacationtrip.exceptions.TripNotExistException;
 import com.neobis.vacationtrip.mapper.TripMapper;
-
 import com.neobis.vacationtrip.repositories.ImageRepository;
 import com.neobis.vacationtrip.repositories.TripRepository;
 import jakarta.transaction.Transactional;
@@ -17,11 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.*;
 
 
@@ -126,6 +122,33 @@ public class TripService {
         trip.setContinent(requestDto.continent());
 
         List<Image> tripImages = new ArrayList<>();
+        iterateOverPhotos(images, tripImages);
+
+        trip.setImages(tripImages);
+        tripRepository.save(trip);
+    }
+
+
+    public TripResponseDto updateBook(TripRequestDto requestDto, List<MultipartFile> images, Long id) {
+      Trip trip =  tripRepository.findById(id)
+                .orElseThrow(() -> new TripNotExistException("Trip with id: " + id + " not found."));
+        if (requestDto.continent() != null) trip.setContinent(requestDto.continent());
+        if (requestDto.description() != null) trip.setDescription(requestDto.description());
+        if (requestDto.destination() != null) trip.setDestination(requestDto.destination());
+        if (requestDto.location() != null) trip.setLocation(requestDto.location());
+        if (requestDto.country() != null) trip.setCountry(requestDto.country());
+        List<Image> tripImages = new ArrayList<>();
+        if (images!= null){
+
+            iterateOverPhotos(images, tripImages);
+
+        }
+        trip.setImages(tripImages);
+       return tripMapper.convertToDto(tripRepository.save(trip));
+
+    }
+
+    private void iterateOverPhotos(List<MultipartFile> images, List<Image> tripImages) {
         for (MultipartFile image : images) {
             try {
                 Image tripImage = new Image();
@@ -136,11 +159,17 @@ public class TripService {
                 throw new RuntimeException("Image upload failed: " + e.getMessage());
             }
         }
-
-        trip.setImages(tripImages);
-        tripRepository.save(trip);
     }
 
-
+    public void deleteById(Long id) {
+        tripRepository.findById(id)
+                .orElseThrow(() -> new TripNotExistException("Trip with id: " + id + " not found."));
+        tripRepository.deleteById(id);
     }
+
+    public List<TripResponseDto> getAllTrips() {
+        List<Trip> books = tripRepository.findAll();
+        return tripMapper.convertToDtoList(books);
+    }
+}
 

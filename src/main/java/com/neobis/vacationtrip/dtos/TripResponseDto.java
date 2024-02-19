@@ -11,6 +11,7 @@ import java.util.List;
 
 @Data
 public class TripResponseDto {
+    private Long id;
    private String destination;
    private String description;
    private String location;

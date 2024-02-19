@@ -1,28 +1,32 @@
 package com.neobis.vacationtrip.config;
 
-import com.cloudinary.Cloudinary;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import com.cloudinary.Cloudinary;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 public class CloudinaryConfig {
 
-    private final String CLOUD_NAME = "drbxd4tkj";
-    private final String API_KEY = "621377172471399";
-    private final String API_SECRET = "2WSu2bvSVzuUFqiE508LLXq5DuQ";
-
     @Bean
     public Cloudinary cloudinary() {
+        String cloudName = System.getenv("CLOUD_NAME");
+        String apiKey = System.getenv("API_KEY");
+        String apiSecret = System.getenv("API_SECRET");
+
+        if (cloudName == null || apiKey == null || apiSecret == null) {
+            throw new IllegalArgumentException("Cloudinary environment variables not set");
+        }
+
         Map<String, String> config = new HashMap<>();
-        config.put("cloud_name",CLOUD_NAME);
-        config.put("api_key",API_KEY);
-        config.put("api_secret",API_SECRET);
+        config.put("cloud_name", cloudName);
+        config.put("api_key", apiKey);
+        config.put("api_secret", apiSecret);
 
         return new Cloudinary(config);
     }
-    }
+}
+
 
 

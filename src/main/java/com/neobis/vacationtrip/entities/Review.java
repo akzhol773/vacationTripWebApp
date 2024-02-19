@@ -18,10 +18,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "trip_id")
-    private Trip trip;
-
     private String username;
 
     private String comment;

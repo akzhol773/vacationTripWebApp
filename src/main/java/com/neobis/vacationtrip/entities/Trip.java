@@ -34,7 +34,7 @@ public class Trip {
 
    @OneToMany
    @JoinTable(
-           name = "trips' images",
+           name = "trips_images",
            joinColumns = @JoinColumn(name = "trip_id"),
            inverseJoinColumns = @JoinColumn(name = "image_id")
    )

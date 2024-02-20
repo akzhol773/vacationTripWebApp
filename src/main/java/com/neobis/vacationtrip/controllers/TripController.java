@@ -45,7 +45,7 @@ public class TripController {
             description = "Returns List of Trip DTO from database"
     )
     @ApiResponse(responseCode = "200", description = "Success")
-    @GetMapping("/new-arrivals")
+    @GetMapping("/featured")
     public ResponseEntity<List<TripResponseDto>> getNewTrips(){
         return ResponseEntity.ok(tripService.findNewTrips());
     }

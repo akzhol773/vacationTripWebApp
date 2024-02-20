@@ -40,12 +40,7 @@ public class Trip {
    )
     private List<Image> images;
 
-    @OneToMany
-    @JoinTable(
-            name = "trips_reviews",
-            joinColumns = @JoinColumn(name = "trip_id"),
-            inverseJoinColumns = @JoinColumn(name = "review_id")
-    )
+    @OneToMany(mappedBy = "trip")
     private List<Review> reviews;
 
     private Integer numberOfViews;

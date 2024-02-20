@@ -171,5 +171,11 @@ public class TripService {
         List<Trip> books = tripRepository.findAll();
         return tripMapper.convertToDtoList(books);
     }
+
+    public TripResponseDto getTripBuId(Long id) {
+      Trip trip = tripRepository.findById(id)
+                .orElseThrow(() -> new TripNotExistException("Trip with id: " + id + " not found."));
+        return tripMapper.convertToDto(trip);
+    }
 }
 

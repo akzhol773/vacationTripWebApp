@@ -9,9 +9,10 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.neobis.vacationtrip.entities.Booking}
  */
-public record BookingRequestDto(Trip trip,
-                                @NotNull String phoneNumber,
-                                @Positive int numberOfPeople,
+public record BookingRequestDto(
+        Long tripId,
+                                String phoneNumber,
+                                int numberOfPeople,
                                 String comment)
         implements Serializable {
 }

@@ -19,8 +19,8 @@ public class BookingService {
 
     public void bookTrip(BookingRequestDto bookingRequest) {
 
-        Trip trip = tripRepository.findById(bookingRequest.trip().getId())
-                .orElseThrow(() -> new TripNotExistException("Trip not found with ID: " + bookingRequest.trip().getId()));
+        Trip trip = tripRepository.findById(bookingRequest.tripId())
+                .orElseThrow(() -> new TripNotExistException("Trip not found with ID: " + bookingRequest.tripId()));
 
         validateBookingRequest(bookingRequest);
 

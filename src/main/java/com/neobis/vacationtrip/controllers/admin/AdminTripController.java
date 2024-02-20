@@ -38,8 +38,21 @@ public class AdminTripController {
     @ApiResponse(responseCode = "200", description = "Success")
 
     @GetMapping("/all")
-    public ResponseEntity<List<TripResponseDto>> getAllBooks() {
+    public ResponseEntity<List<TripResponseDto>> getAllTrips() {
+
         return ResponseEntity.ok(tripService.getAllTrips());
+    }
+
+    @Operation(
+            summary = "Retrieve a trip by id",
+            description = "Get trip by id"
+    )
+    @ApiResponse(responseCode = "200", description = "Success")
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TripResponseDto> getTripById(@PathVariable Long id) {
+
+        return ResponseEntity.ok(tripService.getTripBuId(id));
     }
 
 

@@ -35,7 +35,7 @@ public class TripController {
     })
 
     @GetMapping("/{id}")
-    public ResponseEntity<TripResponseDto> findTripsById(@PathVariable Long id){
+    public ResponseEntity<TripResponseDto> getTripsById(@PathVariable Long id){
         return ResponseEntity.ok(tripService.findTripsById(id));
     }
 
@@ -46,7 +46,7 @@ public class TripController {
     )
     @ApiResponse(responseCode = "200", description = "Success")
     @GetMapping("/new-arrivals")
-    public ResponseEntity<List<TripResponseDto>> findNewTrips(){
+    public ResponseEntity<List<TripResponseDto>> getNewTrips(){
         return ResponseEntity.ok(tripService.findNewTrips());
     }
 
@@ -57,7 +57,7 @@ public class TripController {
     )
     @ApiResponse(responseCode = "200", description = "Success")
      @GetMapping("/popular")
-    public ResponseEntity<List<TripResponseDto>> findPopularTrips() {
+    public ResponseEntity<List<TripResponseDto>> getPopularTrips() {
         return ResponseEntity.ok(tripService.findPopularTrips());
     }
 
@@ -67,7 +67,7 @@ public class TripController {
     )
     @ApiResponse(responseCode = "200", description = "Success")
         @GetMapping("/most-visited")
-        public ResponseEntity<List<TripResponseDto>> findMostVisitedTrips() {
+        public ResponseEntity<List<TripResponseDto>> getMostVisitedTrips() {
             return ResponseEntity.ok(tripService.findMostVisitedTrips());
         }
 
@@ -78,7 +78,7 @@ public class TripController {
     )
     @ApiResponse(responseCode = "200", description = "Success")
     @GetMapping("/asia")
-    public ResponseEntity<List<TripResponseDto>> findAsianTrips() {
+    public ResponseEntity<List<TripResponseDto>> getAsianTrips() {
         return ResponseEntity.ok(tripService.findAsianTrips());
     }
 
@@ -89,7 +89,7 @@ public class TripController {
     )
     @ApiResponse(responseCode = "200", description = "Success")
     @GetMapping("/europe")
-    public ResponseEntity<List<TripResponseDto>> findEuropeanTrips() {
+    public ResponseEntity<List<TripResponseDto>> getEuropeanTrips() {
         return ResponseEntity.ok(tripService.findEuropeanTrips());
     }
 
@@ -100,7 +100,7 @@ public class TripController {
     )
     @ApiResponse(responseCode = "200", description = "Success")
     @GetMapping("/recommended")
-    public ResponseEntity<List<TripResponseDto>> findRecommendedTrips() {
+    public ResponseEntity<List<TripResponseDto>> getRecommendedTrips() {
         return ResponseEntity.ok(tripService.findRecommendedTrips());
     }
 

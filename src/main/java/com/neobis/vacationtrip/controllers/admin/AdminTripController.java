@@ -98,7 +98,7 @@ public class AdminTripController {
     })
     @Parameter(name = "tripId", description = "Unique trip object identifier")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> deleteByID(@PathVariable Long id) {
         tripService.deleteById(id);
         return ResponseEntity.ok().body("Trip with id "+ id +" deleted successfully");
     }

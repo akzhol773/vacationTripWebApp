@@ -1,8 +1,7 @@
 package com.neobis.vacationtrip.dtos;
 
 import com.neobis.vacationtrip.entities.Trip;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 import java.io.Serializable;
 
@@ -10,9 +9,16 @@ import java.io.Serializable;
  * DTO for {@link com.neobis.vacationtrip.entities.Booking}
  */
 public record BookingRequestDto(
+        @NotNull(message = "Tour ID cannot be null")
+        @Min(value = 1, message = "Tour ID must be greater than or equal to 1")
         Long tripId,
+        @NotNull(message = "Phone number cannot be null") @NotBlank(message = "Phone number cannot be blank")
+        @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$", message = "Invalid phone number format")
         String phoneNumber,
+        @Min(value = 1, message = "People count must be greater than or equal to 1")
+        @Max(value = 6, message = "People count must be less than or equal to 6")
         int numberOfPeople,
+        @Size(max = 500, message = "Comment must be less than or equal to 500 characters")
         String comment)
         implements Serializable {
 }

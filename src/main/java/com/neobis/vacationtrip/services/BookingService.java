@@ -32,9 +32,9 @@ public class BookingService {
                 .comment(bookingRequest.comment())
                 .bookingDate(LocalDateTime.now())
                 .build();
-
-        bookingRepository.save(booking);
         incrementTripVisits(trip.getId());
+        bookingRepository.save(booking);
+
 
     }
 

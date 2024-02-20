@@ -40,12 +40,12 @@ public class Trip {
    )
     private List<Image> images;
 
-    @OneToMany(mappedBy = "trip")
+    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
-    private Integer numberOfViews;
+    private int numberOfViews;
 
-    private Integer numberOfBookings;
+    private int numberOfBookings;
 
     @CreationTimestamp
     private LocalDateTime createdDate;
@@ -54,6 +54,8 @@ public class Trip {
     public Trip(){
         this.images = new ArrayList<>();
         this.reviews = new ArrayList<>();
+        this.numberOfBookings = 0;
+        this.numberOfViews = 0;
     }
 
 

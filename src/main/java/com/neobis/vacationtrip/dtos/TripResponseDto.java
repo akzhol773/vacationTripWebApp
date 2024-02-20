@@ -18,7 +18,6 @@ public class TripResponseDto {
    private String country;
     private Integer numberOfViews;
     private Integer numberOfBookings;
-
     private List<Image> imagesList = new ArrayList<>();
     private List<Review> reviews = new ArrayList<>();
 

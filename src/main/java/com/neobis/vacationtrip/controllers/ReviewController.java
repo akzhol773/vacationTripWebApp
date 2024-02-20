@@ -1,6 +1,7 @@
 package com.neobis.vacationtrip.controllers;
 
 import com.neobis.vacationtrip.dtos.ReviewRequestDto;
+import com.neobis.vacationtrip.dtos.ReviewResponseDto;
 import com.neobis.vacationtrip.services.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -8,10 +9,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Review", description = "Public endpoint for users to create a review")
 @RestController
@@ -30,8 +30,19 @@ public class ReviewController {
     })
     @PostMapping("/create")
     public ResponseEntity<String> createReview(@RequestBody ReviewRequestDto requestDto) {
-        reviewService.saveReview(requestDto);
-        return ResponseEntity.ok().body("Review created successfully");
+        return  reviewService.saveReview(requestDto);
+
+    }
+
+    @Operation(
+            summary = "Retrieve all reviews by trip id",
+            description = "Get all review dto as a list by trip id"
+    )
+    @ApiResponse(responseCode = "200", description = "Success")
+    @GetMapping("/{tripId}/all")
+    public ResponseEntity<List<ReviewResponseDto>> getAllReviewsByTripIdId(@PathVariable Long tripId) {
+
+        return ResponseEntity.ok(reviewService.getAllReviewsByTripId(tripId));
     }
 
 

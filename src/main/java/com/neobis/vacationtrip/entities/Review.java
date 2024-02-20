@@ -1,5 +1,6 @@
 package com.neobis.vacationtrip.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,7 +18,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "trip_id")
     private Trip trip;

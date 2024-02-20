@@ -11,8 +11,8 @@ import java.io.Serializable;
  */
 public record BookingRequestDto(
         Long tripId,
-                                String phoneNumber,
-                                int numberOfPeople,
-                                String comment)
+        String phoneNumber,
+        int numberOfPeople,
+        String comment)
         implements Serializable {
 }

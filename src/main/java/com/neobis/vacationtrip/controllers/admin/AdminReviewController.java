@@ -1,8 +1,8 @@
 package com.neobis.vacationtrip.controllers.admin;
 
 import com.neobis.vacationtrip.dtos.ReviewResponseDto;
-import com.neobis.vacationtrip.dtos.TripResponseDto;
 import com.neobis.vacationtrip.services.ReviewService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,6 +18,7 @@ import java.util.List;
 @Tag(name = "Review", description = "Private endpoint for admin to get list of reviews by trip id")
 @RestController
 @RequiredArgsConstructor
+@Hidden
 @RequestMapping("/admin/review")
 public class AdminReviewController {
 
@@ -34,16 +35,7 @@ public class AdminReviewController {
         return ResponseEntity.ok(reviewService.getAllReviews());
     }
 
-    @Operation(
-            summary = "Retrieve all reviews by review id",
-            description = "Get all review dto as a list by review id"
-    )
-    @ApiResponse(responseCode = "200", description = "Success")
-    @GetMapping("/{tripId}/all")
-    public ResponseEntity<List<ReviewResponseDto>> getAllReviewsByTripIdId(@PathVariable Long tripId) {
 
-        return ResponseEntity.ok(reviewService.getAllReviewsByTripId(tripId));
-    }
 
 
 

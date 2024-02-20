@@ -3,6 +3,7 @@ package com.neobis.vacationtrip.controllers.admin;
 import com.neobis.vacationtrip.dtos.TripRequestDto;
 import com.neobis.vacationtrip.dtos.TripResponseDto;
 import com.neobis.vacationtrip.services.TripService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,6 +26,7 @@ import java.util.List;
 })
 @SecurityRequirement(name = "bearerAuth")
 @RestController
+@Hidden
 @RequiredArgsConstructor
 @RequestMapping("/admin/trips")
 public class AdminTripController {
@@ -95,7 +97,7 @@ public class AdminTripController {
             @ApiResponse(responseCode = "404", description = "Trip you are trying to delete not found.", content = @Content)
     })
     @Parameter(name = "tripId", description = "Unique trip object identifier")
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         tripService.deleteById(id);
         return ResponseEntity.ok().body("Trip with id "+ id +" deleted successfully");

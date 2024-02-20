@@ -54,7 +54,7 @@ public class AdminTripController {
     @GetMapping("/{id}")
     public ResponseEntity<TripResponseDto> getTripById(@PathVariable Long id) {
 
-        return ResponseEntity.ok(tripService.getTripBuId(id));
+        return ResponseEntity.ok(tripService.getTripById(id));
     }
 
 

@@ -13,11 +13,10 @@ import com.neobis.vacationtrip.repositories.TripRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Limit;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -29,7 +28,6 @@ public class TripService {
     private final CloudinaryService cloudinaryService;
     private final ImageRepository imageRepository;
 
-    Pageable pageable = PageRequest.of(3, 12);
 
 
     public List<TripResponseDto> findPopularTrips() {
@@ -80,26 +78,41 @@ public class TripService {
 
     public List<TripResponseDto> findRecommendedTrips() {
 
-        List<Trip> popularTrips = filterPopularTrips(pageable);
+        List<Trip> recommendedTrips = filterRecommendedTrips();
 
-        if (popularTrips.isEmpty()) {
+        if (recommendedTrips.isEmpty()) {
             throw new EmptyListException("There aren't any recommended trips available.");
         }
-        return tripMapper.convertToDtoList(popularTrips);
+        return tripMapper.convertToDtoList(recommendedTrips);
     }
 
-    private List<Trip> filterPopularTrips(Pageable pageable) {
-
-        List<Trip> mostVisitedTrips = tripRepository.findMostVisitedTrips(Limit.of(50));
-
-        List<Trip> popularTrips = tripRepository.findPopularTrips(Limit.of(50));
-
-        Set<Trip> recommendedTrips = new HashSet<>();
-        recommendedTrips.addAll(mostVisitedTrips);
-        recommendedTrips.addAll(popularTrips);
-        return new ArrayList<>(recommendedTrips);
-
+    private List<Trip> filterRecommendedTrips() {
+        int currentMonth = LocalDate.now().getMonthValue();
+        switch (currentMonth) {
+            case 12:
+            case 1:
+            case 2:
+                return tripRepository.findWinterTrips();
+            case 3:
+            case 4:
+            case 5:
+                return tripRepository.findSpringTrips();
+            case 6:
+            case 7:
+            case 8:
+                return tripRepository.findSummerTrips();
+            case 9:
+            case 10:
+            case 11:
+                return tripRepository.findAutumnTrips();
+            default:
+                return null;
+        }
     }
+
+
+
+
 
     public void incrementTripViews(Long tripId) {
         Trip trip = tripRepository.findById(tripId).orElseThrow(() -> new TripNotExistException("Trip not found with id: " + tripId));
@@ -172,7 +185,7 @@ public class TripService {
         return tripMapper.convertToDtoList(books);
     }
 
-    public TripResponseDto getTripBuId(Long id) {
+    public TripResponseDto getTripById(Long id) {
       Trip trip = tripRepository.findById(id)
                 .orElseThrow(() -> new TripNotExistException("Trip with id: " + id + " not found."));
         return tripMapper.convertToDto(trip);

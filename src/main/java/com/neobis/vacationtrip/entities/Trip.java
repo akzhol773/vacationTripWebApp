@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,8 @@ public class Trip {
     private String country;
 
     private String continent;
+
+    private String  recommendedMonths;
 
 
    @OneToMany

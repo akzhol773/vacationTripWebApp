@@ -40,7 +40,7 @@ public class ReviewController {
     )
     @ApiResponse(responseCode = "200", description = "Success")
     @GetMapping("/{tripId}/all")
-    public ResponseEntity<List<ReviewResponseDto>> getAllReviewsByTripIdId(@PathVariable Long tripId) {
+    public ResponseEntity<List<ReviewResponseDto>> getAllReviewsByTripId(@PathVariable Long tripId) {
 
         return ResponseEntity.ok(reviewService.getAllReviewsByTripId(tripId));
     }

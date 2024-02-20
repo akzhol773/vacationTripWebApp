@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         ),
         servers = {
                 @Server(
-                        description = "Local environment",
+                        description = "Remote server",
                         url = "https://phobic-honey-production.up.railway.app"
                 )
         }

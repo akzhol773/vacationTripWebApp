@@ -6,6 +6,11 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public record TripRequestDto(String destination, String recommendedMonths, String description, String location, String country, String continent
+public record TripRequestDto(String destination,
+                             String recommendedMonths,
+                             String description,
+                             String location,
+                             String country,
+                             String continent
                             ) implements Serializable {
 }

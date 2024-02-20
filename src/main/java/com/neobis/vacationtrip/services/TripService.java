@@ -133,6 +133,7 @@ public class TripService {
         trip.setLocation(requestDto.location());
         trip.setCountry(requestDto.country());
         trip.setContinent(requestDto.continent());
+        trip.setRecommendedMonths(requestDto.recommendedMonths());
 
         List<Image> tripImages = new ArrayList<>();
         iterateOverPhotos(images, tripImages);

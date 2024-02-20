@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class BookingController {
             @ApiResponse(responseCode = "500", description = "Your trip can not be booked")
     })
     @PostMapping("/book")
-    public ResponseEntity<String> bookTrip(@Validated @RequestBody BookingRequestDto bookingRequest){
+    public ResponseEntity<String> bookTrip(@RequestBody @Valid BookingRequestDto bookingRequest){
         try {
             bookingService.bookTrip(bookingRequest);
             return ResponseEntity.ok("Your trip has been booked!");

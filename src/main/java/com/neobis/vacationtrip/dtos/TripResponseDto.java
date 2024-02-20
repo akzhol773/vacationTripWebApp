@@ -16,9 +16,7 @@ public class TripResponseDto {
    private String description;
    private String location;
    private String country;
-    private Integer numberOfViews;
-    private Integer numberOfBookings;
-    private List<Image> imagesList = new ArrayList<>();
-    private List<Review> reviews = new ArrayList<>();
+    private List<String> images;
+    private List<ReviewResponseDto> reviews;
 
 }

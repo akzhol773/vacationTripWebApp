@@ -35,7 +35,7 @@ public class TripController {
     })
 
     @GetMapping("/{id}")
-    public ResponseEntity<TripResponseDto> getTripsById(@PathVariable Long id){
+    public ResponseEntity<TripResponseDto> getTripById(@PathVariable Long id){
         return ResponseEntity.ok(tripService.findTripsById(id));
     }
 
@@ -46,7 +46,7 @@ public class TripController {
     )
     @ApiResponse(responseCode = "200", description = "Success")
     @GetMapping("/featured")
-    public ResponseEntity<List<TripResponseDto>> getNewTrips(){
+    public ResponseEntity<List<TripResponseDto>> getFeaturedTrips(){
         return ResponseEntity.ok(tripService.findNewTrips());
     }
 

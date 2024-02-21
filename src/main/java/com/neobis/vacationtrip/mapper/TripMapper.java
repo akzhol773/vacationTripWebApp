@@ -1,7 +1,8 @@
 package com.neobis.vacationtrip.mapper;
 
-import com.neobis.vacationtrip.dtos.ReviewResponseDto;
+
 import com.neobis.vacationtrip.dtos.TripResponseDto;
+import com.neobis.vacationtrip.dtos.TripResponseShortDto;
 import com.neobis.vacationtrip.entities.Image;
 import com.neobis.vacationtrip.entities.Trip;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,6 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class TripMapper {
-    private final ModelMapper modelMapper;
     private final ReviewMapper reviewMapper;
 
 
@@ -34,5 +34,17 @@ public class TripMapper {
         return trips.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+    public List<TripResponseShortDto> convertToDtoListShort(List<Trip> trips) {
+        return trips.stream()
+                .map(this::toTripDtoFromList)
+                .collect(Collectors.toList());
+    }
+    public  TripResponseShortDto toTripDtoFromList(Trip trip) {
+        return new TripResponseShortDto(
+                trip.getId(),
+                trip.getImages().get(0).getUrl(),
+                trip.getDestination()
+        );
     }
 }

@@ -3,6 +3,7 @@ package com.neobis.vacationtrip.services;
 import com.neobis.vacationtrip.dtos.TripRequestDto;
 import com.neobis.vacationtrip.dtos.TripResponseDto;
 
+import com.neobis.vacationtrip.dtos.TripResponseShortDto;
 import com.neobis.vacationtrip.entities.Image;
 import com.neobis.vacationtrip.entities.Trip;
 import com.neobis.vacationtrip.exceptions.EmptyListException;
@@ -30,12 +31,12 @@ public class TripService {
 
 
 
-    public List<TripResponseDto> findPopularTrips() {
+    public List<TripResponseShortDto> findPopularTrips() {
         List<Trip> popularTrips = tripRepository.findPopularTrips(Limit.of(9));
         if (popularTrips == null || popularTrips.isEmpty()) {
             throw new EmptyListException("There aren't any popular trips available.");
         }
-        return tripMapper.convertToDtoList(popularTrips);
+        return tripMapper.convertToDtoListShort(popularTrips);
     }
 
     public TripResponseDto findTripsById(Long id) {
@@ -44,46 +45,46 @@ public class TripService {
         return tripMapper.convertToDto(trip);
     }
 
-    public List<TripResponseDto> findNewTrips() {
-        List<Trip> newTrips = tripRepository.findNewTrips(Limit.of(9));
-        if (newTrips == null || newTrips.isEmpty()) {
+    public List<TripResponseShortDto> findFeaturedTrips() {
+        List<Trip> featuredTrips = tripRepository.findFeaturedTrips(Limit.of(9));
+        if (featuredTrips == null || featuredTrips.isEmpty()) {
             throw new EmptyListException("There aren't any new trips available.");
         }
-        return tripMapper.convertToDtoList(newTrips);
+        return tripMapper.convertToDtoListShort(featuredTrips);
     }
 
-    public List<TripResponseDto> findMostVisitedTrips() {
+    public List<TripResponseShortDto> findMostVisitedTrips() {
         List<Trip> mostVisitedTrips = tripRepository.findMostVisitedTrips(Limit.of(9));
         if (mostVisitedTrips == null || mostVisitedTrips.isEmpty()) {
             throw new EmptyListException("There aren't any most visited trips available.");
         }
-        return tripMapper.convertToDtoList(mostVisitedTrips);
+        return tripMapper.convertToDtoListShort(mostVisitedTrips);
     }
 
-    public List<TripResponseDto> findAsianTrips() {
+    public List<TripResponseShortDto> findAsianTrips() {
         List<Trip> asianTrips = tripRepository.findAsianTrips();
         if (asianTrips == null || asianTrips.isEmpty()) {
             throw new EmptyListException("There aren't any Asian trips available.");
         }
-        return tripMapper.convertToDtoList(asianTrips);
+        return tripMapper.convertToDtoListShort(asianTrips);
     }
 
-    public List<TripResponseDto> findEuropeanTrips() {
+    public List<TripResponseShortDto> findEuropeanTrips() {
         List<Trip> europeanTrips = tripRepository.findEuropeanTrips();
         if (europeanTrips == null || europeanTrips.isEmpty()) {
             throw new EmptyListException("There aren't any European trips available.");
         }
-        return tripMapper.convertToDtoList(europeanTrips);
+        return tripMapper.convertToDtoListShort(europeanTrips);
     }
 
-    public List<TripResponseDto> findRecommendedTrips() {
+    public List<TripResponseShortDto> findRecommendedTrips() {
 
         List<Trip> recommendedTrips = filterRecommendedTrips();
 
         if (recommendedTrips.isEmpty()) {
             throw new EmptyListException("There aren't any recommended trips available.");
         }
-        return tripMapper.convertToDtoList(recommendedTrips);
+        return tripMapper.convertToDtoListShort(recommendedTrips);
     }
 
     private List<Trip> filterRecommendedTrips() {

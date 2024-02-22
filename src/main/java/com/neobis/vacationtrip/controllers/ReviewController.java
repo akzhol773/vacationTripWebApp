@@ -25,7 +25,7 @@ public class ReviewController {
             description = "Creates a new review and returns a string informing it was created"
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Your trip has been booked"),
+            @ApiResponse(responseCode = "201", description = "Review created successfully"),
 
     })
     @PostMapping("/create")
